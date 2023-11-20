@@ -37,7 +37,7 @@ def string_view_statistics(library_string_statistics_list, string_dict):
     library_num_list = []
     seen_library_num_max = 0
     seen_library_num_min = 100000000
-    for s, library_id_set in string_dict.items():
+    for s, library_id_set in tqdm(string_dict.items(), total=len(string_dict), desc="string_view_statistics"):
         library_num = len(library_id_set)
         seen_library_num_all += library_num
         library_num_list.append(library_num)
@@ -71,8 +71,9 @@ def library_view_statistics(library_string_statistics_list):
     string_intersection = set(library_string_statistics_list[0]['strings'])
     string_dict = dict()
     # library 视角的统计
-    for library_string_statistics in tqdm(library_string_statistics_list, total=len(library_string_statistics_list),
-                                          desc="statistic"):
+    for library_string_statistics in tqdm(library_string_statistics_list,
+                                          total=len(library_string_statistics_list),
+                                          desc="library_string_statistics"):
         # 库级别总体统计
         repository_id = library_string_statistics['repository_id']
         strings = library_string_statistics['strings']
@@ -118,7 +119,6 @@ def statistic(library_string_statistics_list):
     return {
         "library_view": library_view,
         "string_view": string_view
-
     }
 
 
