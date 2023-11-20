@@ -73,19 +73,22 @@ def parse_processed_feature_file(path):
 
 def walk_raw_features():
     # 读取文件路径
+    logger.info(f"start walk feature_file_paths")
     feature_file_paths = []
     for root, dirs, files in os.walk(PROCESSED_FILE_FEATURE_DIR):
         for f in files:
             f_path = os.path.join(root, f)
             feature_file_paths.append(f_path)
+    logger.info(f"walk feature_file_paths finished, num: {len(feature_file_paths)}")
 
-    # 多进程计算
+    # 多进程统计
+    logger.info(f"start statistic")
     pool = multiprocessing.Pool(processes=EXTRACTION_PROCESS_NUM)
-
-    # 多进程并发提取
+    logger.info(f"waiting for finishing...")
     results = pool.imap_unordered(parse_processed_feature_file, feature_file_paths)
     for _ in tqdm(results, total=len(feature_file_paths), desc="statistic strings"):
         pass
+    logger.info(f"all finished.")
 
     pool.close()
     pool.join()
