@@ -1,0 +1,4 @@
+./processed_feature_dir
+./string_statistic_dir
+./.env
+./.idea
