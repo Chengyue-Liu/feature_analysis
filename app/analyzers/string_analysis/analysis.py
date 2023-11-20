@@ -5,6 +5,7 @@ import os
 import traceback
 
 from loguru import logger
+from tqdm import tqdm
 
 from app.settings import LIBRARY_STRING_STATISTICS_DIR, FINAL_STATISTICS_JSON_PATH
 
@@ -34,7 +35,8 @@ def statistic(library_string_statistics_list):
     string_num_min = 100000000  # 最小值
     string_intersection = set(library_string_statistics_list[0]['strings'])
     string_union = set()
-    for library_string_statistics in library_string_statistics_list:
+    for library_string_statistics in tqdm(library_string_statistics_list, total=len(library_string_statistics_list),
+                                          desc="statistic"):
         strings = library_string_statistics['strings']
         string_num = library_string_statistics['string_num']
         string_num_list.append(string_num)
@@ -62,10 +64,13 @@ def statistic(library_string_statistics_list):
 
 def analyze_library_string_statistics():
     # 加载所有的文件统计
+    logger.info(f"load_all_library_string_statistics...")
     library_string_statistics_list = load_all_library_string_statistics()
-
+    logger.info(f"load_all_library_string_statistics finished")
     # 分析这些统计结果
+
     library_string_statistics = statistic(library_string_statistics_list)
 
     with open(FINAL_STATISTICS_JSON_PATH, 'w') as f:
         json.dump(library_string_statistics, f, ensure_ascii=False, indent=4)
+    logger.info(f"all finished")
