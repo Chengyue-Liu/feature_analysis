@@ -32,6 +32,20 @@ todo 分析
 """
 
 
+def walk_file_paths():
+    feature_file_paths = []
+    count = 0
+    for root, dirs, files in os.walk(PROCESSED_FILE_FEATURE_DIR):
+        for f in files:
+            f_path = os.path.join(root, f)
+            if f_path.endswith('.json'):
+                count += 1
+                if count % 1000 == 0:
+                    logger.info(f"walk progress: {count}")
+                feature_file_paths.append(f_path)
+    return feature_file_paths
+
+
 def parse_processed_feature_file(path):
     try:
         # 加载
@@ -74,16 +88,7 @@ def parse_processed_feature_file(path):
 def walk_raw_features():
     # 读取文件路径
     logger.info(f"start walk feature_file_paths")
-    feature_file_paths = []
-    count = 0
-    for root, dirs, files in os.walk(PROCESSED_FILE_FEATURE_DIR):
-        for f in files:
-            f_path = os.path.join(root, f)
-            if f_path.endswith('.json'):
-                count += 1
-                if count % 1000 == 0:
-                    logger.info(f"walk progress: {count}")
-                feature_file_paths.append(f_path)
+    feature_file_paths = walk_file_paths()
     logger.info(f"walk feature_file_paths finished, num: {len(feature_file_paths)}")
 
     # 多进程统计
