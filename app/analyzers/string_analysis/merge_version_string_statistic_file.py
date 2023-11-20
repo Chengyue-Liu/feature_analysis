@@ -8,15 +8,15 @@ import traceback
 from loguru import logger
 from tqdm import tqdm
 
-from app.settings import VERSION_STRING_STATISTIC_DIR, LIBRARY_STRING_STATISTIC_DIR, EXTRACTION_PROCESS_NUM
+from app.settings import VERSION_STRING_STATISTICS_DIR, LIBRARY_STRING_STATISTICS_DIR, EXTRACTION_PROCESS_NUM
 
 
 # @Time : 2023/11/20 17:10
 # @Author : Liu Chengyue
 def get_merged_version_string_statistics_file_paths():
     library_version_string_statistic_file_paths = []
-    for d in os.listdir(VERSION_STRING_STATISTIC_DIR):
-        d_path = os.path.join(VERSION_STRING_STATISTIC_DIR, d)
+    for d in os.listdir(VERSION_STRING_STATISTICS_DIR):
+        d_path = os.path.join(VERSION_STRING_STATISTICS_DIR, d)
         version_file_paths = []
         for f in os.listdir(d_path):
             f_path = os.path.join(d_path, f)
@@ -83,7 +83,7 @@ def merge_version_string_statistics(version_file_paths):
         "strings": list(string_set)
     }
 
-    result_path = os.path.join(LIBRARY_STRING_STATISTIC_DIR,
+    result_path = os.path.join(LIBRARY_STRING_STATISTICS_DIR,
                                f"{version_string_statistic_list[0]['repository_id']}.json")
     with open(result_path, 'w') as f:
         json.dump(result, f, ensure_ascii=False, indent=4)

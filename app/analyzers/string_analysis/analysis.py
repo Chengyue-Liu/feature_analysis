@@ -6,14 +6,14 @@ import traceback
 
 from loguru import logger
 
-from app.settings import LIBRARY_STRING_STATISTIC_DIR
+from app.settings import LIBRARY_STRING_STATISTICS_DIR
 
 
 # @Time : 2023/11/20 17:43
 # @Author : Liu Chengyue
 def load_all_library_string_statistics():
     library_string_statistics_list = []
-    for root, dirs, files in os.walk(LIBRARY_STRING_STATISTIC_DIR):
+    for root, dirs, files in os.walk(LIBRARY_STRING_STATISTICS_DIR):
         for f in files:
             f_path = os.path.join(root, f)
             try:

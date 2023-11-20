@@ -8,7 +8,7 @@ import traceback
 from loguru import logger
 from tqdm import tqdm
 
-from app.settings import PROCESSED_FILE_FEATURE_DIR, EXTRACTION_PROCESS_NUM, VERSION_STRING_STATISTIC_DIR
+from app.settings import PROCESSED_FILE_FEATURE_DIR, EXTRACTION_PROCESS_NUM, VERSION_STRING_STATISTICS_DIR
 
 # @Time : 2023/11/20 15:12
 # @Author : Liu Chengyue
@@ -75,7 +75,7 @@ def generate_version_string_statistics(path):
         }
 
         # 保存
-        output_dir = os.path.join(VERSION_STRING_STATISTIC_DIR, str(version_feature['repository_id']))
+        output_dir = os.path.join(VERSION_STRING_STATISTICS_DIR, str(version_feature['repository_id']))
         os.makedirs(output_dir, exist_ok=True)
         result_path = os.path.join(output_dir, f"{version_feature['version_id']}.json")
         with open(result_path, 'w') as f:

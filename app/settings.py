@@ -16,11 +16,11 @@ PROCESSED_FILE_FEATURE_DIR = env.str("PROCESSED_FILE_FEATURE_DIR",
                                      "/Users/liuchengyue/Desktop/works/feature_analysis/feature_analysis/files/processed_feature_dir")
 
 # 存放每个版本字符串统计结果的文件夹路径
-VERSION_STRING_STATISTIC_DIR = env.str("STRING_STATISTIC_DIR",
+VERSION_STRING_STATISTICS_DIR = env.str("VERSION_STRING_STATISTICS_DIR",
                                        "/Users/liuchengyue/Desktop/works/feature_analysis/feature_analysis/files/version_string_statitstics")
 
 # 存放每个库（把所有版本版本合并后）字符串统计结果的文件夹路径
-LIBRARY_STRING_STATISTIC_DIR = env.str("STRING_STATISTIC_DIR",
+LIBRARY_STRING_STATISTICS_DIR = env.str("LIBRARY_STRING_STATISTICS_DIR",
                                        "/Users/liuchengyue/Desktop/works/feature_analysis/feature_analysis/files/library_string_statitstics")
 
 # 并发数量
