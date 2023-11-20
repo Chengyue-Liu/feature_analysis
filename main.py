@@ -17,7 +17,7 @@ def main():
     # multiple_generate_version_string_statistics()
 
     # 合并每个库的文件，方便后续的处理
-    multiple_merge_version_string_statistics()
+    # multiple_merge_version_string_statistics()
 
     # 分布统计
     analyze_library_string_statistics()
