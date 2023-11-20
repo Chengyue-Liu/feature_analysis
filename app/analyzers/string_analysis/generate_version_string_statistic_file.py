@@ -8,7 +8,7 @@ import traceback
 from loguru import logger
 from tqdm import tqdm
 
-from app.settings import PROCESSED_FILE_FEATURE_DIR, EXTRACTION_PROCESS_NUM, VERSION_STRING_STATISTICS_DIR
+from app.settings import PROCESSED_FILE_FEATURE_DIR, PROCESS_NUM, VERSION_STRING_STATISTICS_DIR
 
 # @Time : 2023/11/20 15:12
 # @Author : Liu Chengyue
@@ -93,7 +93,7 @@ def multiple_generate_version_string_statistics():
 
     # 多进程统计
     logger.info(f"start statistic")
-    pool = multiprocessing.Pool(processes=EXTRACTION_PROCESS_NUM)
+    pool = multiprocessing.Pool(processes=PROCESS_NUM)
     logger.info(f"waiting for finishing...")
     results = pool.imap_unordered(generate_version_string_statistics, feature_file_paths)
     for _ in tqdm(results, total=len(feature_file_paths), desc="statistic strings"):

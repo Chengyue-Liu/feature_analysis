@@ -8,7 +8,7 @@ import traceback
 from loguru import logger
 from tqdm import tqdm
 
-from app.settings import VERSION_STRING_STATISTICS_DIR, LIBRARY_STRING_STATISTICS_DIR, EXTRACTION_PROCESS_NUM
+from app.settings import VERSION_STRING_STATISTICS_DIR, LIBRARY_STRING_STATISTICS_DIR, PROCESS_NUM
 
 
 # @Time : 2023/11/20 17:10
@@ -28,16 +28,14 @@ def get_merged_version_string_statistics_file_paths():
 def summary_version_statistic(version_string_statistic_list):
     version_num = len(version_string_statistic_list)
     string_num_all = 0  # 总数量（不去重，为了计算平均值用）
-    string_num_avg = 0  # 平均值
     string_num_max = 0  # 最大值
     string_num_min = 100000000  # 最小值
     string_intersection = set(version_string_statistic_list[0]['strings'])
+    string_union = set()
     for version_string_statistic in version_string_statistic_list:
         strings = version_string_statistic['strings']
         string_num = version_string_statistic['string_num']
         string_num_all += string_num
-
-        string_num_avg = round(string_num_all / version_num, 2)
 
         if string_num > string_num_max:
             string_num_max = string_num
@@ -46,10 +44,13 @@ def summary_version_statistic(version_string_statistic_list):
             string_num_min = string_num
 
         string_intersection = string_intersection.intersection(strings)
+        string_union = string_union.union(strings)
 
     return {
         "version_num": version_num,
-        "string_num_avg": string_num_avg,
+        "string_num_all": string_num_all,
+        "string_num_all(deduplicated)": len(string_union),
+        "string_num_avg": round(string_num_all / version_num, 2),
         "string_num_max": string_num_max,
         "string_num_min": string_num_min,
         "string_num_intersection": len(string_intersection),
@@ -86,7 +87,7 @@ def merge_version_string_statistics(version_file_paths):
     result_path = os.path.join(LIBRARY_STRING_STATISTICS_DIR,
                                f"{version_string_statistic_list[0]['repository_id']}.json")
     with open(result_path, 'w') as f:
-        json.dump(result, f, ensure_ascii=False, indent=4)
+        json.dump(result, f, ensure_ascii=False)
 
 
 def multiple_merge_version_string_statistics():
@@ -97,7 +98,7 @@ def multiple_merge_version_string_statistics():
 
     # 多进程统计
     logger.info(f"start merge statistic")
-    pool = multiprocessing.Pool(processes=EXTRACTION_PROCESS_NUM)
+    pool = multiprocessing.Pool(processes=PROCESS_NUM)
     logger.info(f"waiting for finishing...")
     results = pool.imap_unordered(merge_version_string_statistics, library_version_string_statistic_file_paths)
     for _ in tqdm(results, total=len(library_version_string_statistic_file_paths), desc="merge statistics"):
