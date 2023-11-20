@@ -8,7 +8,7 @@ import traceback
 from loguru import logger
 from tqdm import tqdm
 
-from app.settings import PROCESSED_FILE_FEATURE_DIR, EXTRACTION_PROCESS_NUM, STRING_STATISTIC_DIR
+from app.settings import PROCESSED_FILE_FEATURE_DIR, EXTRACTION_PROCESS_NUM, VERSION_STRING_STATISTIC_DIR
 
 # @Time : 2023/11/20 15:12
 # @Author : Liu Chengyue
@@ -32,7 +32,7 @@ todo 分析
 """
 
 
-def walk_file_paths():
+def get_processed_version_feature_file_paths():
     feature_file_paths = []
     count = 0
     for root, dirs, files in os.walk(PROCESSED_FILE_FEATURE_DIR):
@@ -46,7 +46,7 @@ def walk_file_paths():
     return feature_file_paths
 
 
-def parse_processed_feature_file(path):
+def generate_version_string_statistics(path):
     try:
         # 加载
         with open(path) as f:
@@ -75,7 +75,7 @@ def parse_processed_feature_file(path):
         }
 
         # 保存
-        output_dir = os.path.join(STRING_STATISTIC_DIR, str(version_feature['repository_id']))
+        output_dir = os.path.join(VERSION_STRING_STATISTIC_DIR, str(version_feature['repository_id']))
         os.makedirs(output_dir, exist_ok=True)
         result_path = os.path.join(output_dir, f"{version_feature['version_id']}.json")
         with open(result_path, 'w') as f:
@@ -85,17 +85,17 @@ def parse_processed_feature_file(path):
         logger.error(traceback.format_exc())
 
 
-def walk_raw_features():
+def multiple_generate_version_string_statistics():
     # 读取文件路径
     logger.info(f"start walk feature_file_paths")
-    feature_file_paths = walk_file_paths()
+    feature_file_paths = get_processed_version_feature_file_paths()
     logger.info(f"walk feature_file_paths finished, num: {len(feature_file_paths)}")
 
     # 多进程统计
     logger.info(f"start statistic")
     pool = multiprocessing.Pool(processes=EXTRACTION_PROCESS_NUM)
     logger.info(f"waiting for finishing...")
-    results = pool.imap_unordered(parse_processed_feature_file, feature_file_paths)
+    results = pool.imap_unordered(generate_version_string_statistics, feature_file_paths)
     for _ in tqdm(results, total=len(feature_file_paths), desc="statistic strings"):
         pass
     logger.info(f"all finished.")
