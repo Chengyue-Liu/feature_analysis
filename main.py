@@ -3,6 +3,7 @@
 import os
 
 from app.analyzers.string_analysis.analysis import analyze_library_string_statistics
+from app.analyzers.string_analysis.draw_picture import draw
 from app.analyzers.string_analysis.generate_version_string_statistic_file import \
     multiple_generate_version_string_statistics
 from app.analyzers.string_analysis.merge_version_string_statistic_file import multiple_merge_version_string_statistics
@@ -20,7 +21,10 @@ def main():
     # multiple_merge_version_string_statistics()
 
     # 分布统计
-    analyze_library_string_statistics()
+    # analyze_library_string_statistics()
+
+    # 绘图
+    draw()
 
 
 if __name__ == '__main__':
