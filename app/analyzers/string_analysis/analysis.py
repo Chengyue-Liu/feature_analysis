@@ -20,6 +20,8 @@ def load_all_library_string_statistics():
             try:
                 with open(f_path) as file_obj:
                     library_string_statistics_list.append(json.load(file_obj))
+                    if len(library_string_statistics_list) % 1000 == 0:
+                        logger.info(f"load progress: {len(library_string_statistics_list)}")
             except Exception as e:
                 logger.error(f"error occurred when process {f_path}, error: {e}")
                 logger.error(traceback.format_exc())
