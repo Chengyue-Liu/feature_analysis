@@ -17,8 +17,12 @@ def get_merged_version_string_statistics_file_paths():
     library_version_string_statistic_file_paths = []
     for d in os.listdir(VERSION_STRING_STATISTICS_DIR):
         d_path = os.path.join(VERSION_STRING_STATISTICS_DIR, d)
+        if not os.path.isdir(d_path):
+            continue
         version_file_paths = []
         for f in os.listdir(d_path):
+            if not f.endswith('.json'):
+                continue
             f_path = os.path.join(d_path, f)
             version_file_paths.append(f_path)
         library_version_string_statistic_file_paths.append(version_file_paths)
@@ -27,13 +31,38 @@ def get_merged_version_string_statistics_file_paths():
 
 def summary_version_statistic(version_string_statistic_list):
     version_num = len(version_string_statistic_list)
+    file_num_all = 0  # 总数量（不去重，为了计算平均值用）
+    file_num_max = 0  # 最大值
+    file_num_min = 100000000  # 最小值
+    node_num_all = 0  # 总数量（不去重，为了计算平均值用）
+    node_num_max = 0  # 最大值
+    node_num_min = 100000000  # 最小值
     string_num_all = 0  # 总数量（不去重，为了计算平均值用）
     string_num_max = 0  # 最大值
     string_num_min = 100000000  # 最小值
-    string_intersection = set(version_string_statistic_list[0]['strings'])
     string_union = set()
     for version_string_statistic in version_string_statistic_list:
-        strings = version_string_statistic['strings']
+        # file num
+        file_num = version_string_statistic['file_num']
+        file_num_all += file_num
+
+        if file_num > file_num_max:
+            file_num_max = file_num
+
+        if file_num < file_num_min:
+            file_num_min = file_num
+
+        # node num
+        node_num = version_string_statistic['node_num']
+        node_num_all += node_num
+
+        if node_num > node_num_max:
+            node_num_max = node_num
+
+        if node_num < node_num_min:
+            node_num_min = node_num
+
+        # string num
         string_num = version_string_statistic['string_num']
         string_num_all += string_num
 
@@ -43,17 +72,23 @@ def summary_version_statistic(version_string_statistic_list):
         if string_num < string_num_min:
             string_num_min = string_num
 
-        string_intersection = string_intersection.intersection(strings)
+        # strings
+        strings = version_string_statistic['strings']
         string_union = string_union.union(strings)
 
     return {
         "version_num": version_num,
+        "file_num_avg": round(file_num_all / version_num, 2),
+        "file_num_max": string_num_max,
+        "file_num_min": string_num_min,
+        "node_num_avg": round(node_num_all / version_num, 2),
+        "node_num_max": string_num_max,
+        "node_num_min": string_num_min,
         "string_num_all": string_num_all,
         "string_num_all(deduplicated)": len(string_union),
         "string_num_avg": round(string_num_all / version_num, 2),
         "string_num_max": string_num_max,
         "string_num_min": string_num_min,
-        "string_num_intersection": len(string_intersection),
     }
 
 

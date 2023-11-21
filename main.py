@@ -22,13 +22,13 @@ def main():
     # multiple_merge_version_string_statistics()
 
     # 分布统计
-    # analyze_library_string_statistics()
+    analyze_library_string_statistics()
 
     # 绘图
     # draw()
 
     # 其他计算
-    calculate()
+    # calculate()
 
 
 if __name__ == '__main__':

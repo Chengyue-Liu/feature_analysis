@@ -55,8 +55,10 @@ def generate_version_string_statistics(path):
         # 解析字符串
         string_set = set()
         file_features = version_feature['file_features']
+        node_num = 0
         for file_feature in file_features:
             node_features = file_feature['node_features']
+            node_num += len(node_features)
             for node_feature in node_features:
                 if node_feature_strings := node_feature.get('strings'):
                     if must_compile_string_group := node_feature_strings['must_compile_string_group']:
@@ -70,6 +72,8 @@ def generate_version_string_statistics(path):
             "repository_name": version_feature['repository_name'],
             "version_id": version_feature['version_id'],
             "version_number": version_feature['version_number'],
+            "file_num": len(file_features),
+            "node_num": node_num,
             "string_num": len(string_set),
             "strings": list(string_set)
         }
