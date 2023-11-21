@@ -1,17 +1,17 @@
 {
     "library_view": {
-        "library_num": 4,
+        "library_num": 25886,
         "file_num_all": 75.75,
-        "file_num_avg": 18.94,
+        "file_num_avg": 0.0,
         "file_num_max": 31.0,
         "file_num_min": 2.0,
         "node_num_all": 870.75,
-        "node_num_avg": 217.69,
+        "node_num_avg": 0.03,
         "node_num_max": 526.75,
         "node_num_min": 41.0,
         "string_num_all": 1690,
         "string_num_all(deduplicated)": 1690,
-        "string_num_avg": 422.5,
+        "string_num_avg": 0.07,
         "string_num_max": 1330,
         "string_num_min": 27,
         "file_num_max_library_info": {
