@@ -33,8 +33,8 @@ def plot_distribution_library_view(data_dict: dict):
     plt.yticks(y_ticks)
 
     # 添加标签和标题
-    plt.xlabel('string num(10^n)')
-    plt.ylabel('library num')
+    plt.xlabel('library string num(10^n)')
+    plt.ylabel('library count')
     plt.title('library string num')
 
     # 显示图例
@@ -70,8 +70,8 @@ def plot_distribution_string_view(data_dict: dict):
 
     # 添加标签和标题
     plt.xlabel('seen library num(10^n)')
-    plt.ylabel('string num(10^n)')
-    plt.title('library string num')
+    plt.ylabel('string count(10^n)')
+    plt.title('seen library num')
 
     # 显示图例
     plt.legend()

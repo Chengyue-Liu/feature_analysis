@@ -75,8 +75,7 @@ def string_view_statistics(library_string_statistics_list, string_dict):
 
 
 def library_view_statistics(library_string_statistics_list):
-    library_num = 25886  # 一共25811，但是提取的时候，去掉了35个，太大的，没提取。所以，按25776 计算
-    library_num_with_feature = len(library_string_statistics_list)
+    library_num = len(library_string_statistics_list)
     file_num_all = 0
     file_num_list = []
     file_num_max = 0  # 最大值
@@ -95,6 +94,7 @@ def library_view_statistics(library_string_statistics_list):
     string_num_min = 100000000  # 最小值
     string_num_max_library_info = {}
     string_num_min_library_info = {}
+    no_string_library_id_list = []
     string_dict = dict()
     # library 视角的统计
     for library_string_statistics in tqdm(library_string_statistics_list,
@@ -140,6 +140,9 @@ def library_view_statistics(library_string_statistics_list):
         # 3. 字符串
         strings = library_string_statistics.pop('strings')
         string_num = library_string_statistics['string_num']
+        if string_num == 0:
+            no_string_library_id_list.append(repository_id)
+
         # 字符串数量列表
         string_num_list.append(string_num)
         # 字符串总数量
@@ -170,7 +173,6 @@ def library_view_statistics(library_string_statistics_list):
 
     library_view = {
         "library_num": library_num,
-        "library_num_with_feature": library_num_with_feature,
         "file_num_all": file_num_all,
         "file_num_avg": round(file_num_all / library_num, 2),
         "file_num_max": file_num_max,
