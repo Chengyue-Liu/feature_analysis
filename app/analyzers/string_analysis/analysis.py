@@ -75,8 +75,8 @@ def string_view_statistics(library_string_statistics_list, string_dict):
 
 
 def library_view_statistics(library_string_statistics_list):
-    # library_num = len(library_string_statistics_list)
     library_num = 25886  # 一共25811，但是提取的时候，去掉了35个，太大的，没提取。所以，按25776 计算
+    library_num_with_feature = len(library_string_statistics_list)
     file_num_all = 0
     file_num_list = []
     file_num_max = 0  # 最大值
@@ -170,6 +170,7 @@ def library_view_statistics(library_string_statistics_list):
 
     library_view = {
         "library_num": library_num,
+        "library_num_with_feature": library_num_with_feature,
         "file_num_all": file_num_all,
         "file_num_avg": round(file_num_all / library_num, 2),
         "file_num_max": file_num_max,
