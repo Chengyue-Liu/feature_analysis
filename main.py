@@ -7,6 +7,7 @@ from app.analyzers.string_analysis.draw_picture import draw
 from app.analyzers.string_analysis.generate_version_string_statistic_file import \
     multiple_generate_version_string_statistics
 from app.analyzers.string_analysis.merge_version_string_statistic_file import multiple_merge_version_string_statistics
+from app.analyzers.string_analysis.other_calculation import calculate
 
 
 # @Time : 2023/11/20 16:06
@@ -24,7 +25,10 @@ def main():
     # analyze_library_string_statistics()
 
     # 绘图
-    draw()
+    # draw()
+
+    # 其他计算
+    calculate()
 
 
 if __name__ == '__main__':

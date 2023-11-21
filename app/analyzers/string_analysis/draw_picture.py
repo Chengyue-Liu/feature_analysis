@@ -90,6 +90,6 @@ def draw():
     category_count = library_view['library_string_num:count']
     plot_distribution_library_view(category_count)
 
-    # string_view = library_string_statistics['string_view']
-    # category_count = string_view['seen_library_num:count']
-    # plot_distribution_string_view(category_count)
+    string_view = library_string_statistics['string_view']
+    category_count = string_view['seen_library_num:count']
+    plot_distribution_string_view(category_count)
